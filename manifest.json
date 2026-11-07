@@ -1,0 +1,21 @@
+{
+    "package_name": "Newb",
+    "id": "io.github.shawngrona.newb",
+    "title": "Newb",
+    "version": "1.0.0",
+    "manufacturer": "shawngrona",
+    "contact": "shawngrona@gmail.com",
+    "description": "Learn what a DAW is by doing it, inside LUNA: an interactive course on tracks, MIDI, instruments, mixing, effects, sends, recording, automation and export, with steps that tick themselves off as you go.",
+    "sdk_version": "3.1.1.44",
+    "min_luna_version": "3.1.1",
+    "engines": [
+        "luna"
+    ],
+    "html": "index.html",
+    "icon": "icon.jpg",
+    "target": "window",
+    "floating": true,
+    "show_with_session": false,
+    "width": 540,
+    "height": 780
+}

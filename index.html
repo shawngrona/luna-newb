@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Newb</title>
+  <style>
+    :root { color-scheme: dark; --accent: #F7C449; --ok: #46c27a; --bg: #141418; --panel: #1d1d23; --line: #2d2d36; --muted: #8f8f9a; }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html, body { height: 100%; }
+    body { margin: 0; background: var(--bg); color: #e4e4ea; font: 14px/1.5 -apple-system, Helvetica, sans-serif; display: flex; flex-direction: column; -webkit-user-select: none; user-select: none; }
+    #body, #deeper-body { -webkit-user-select: text; user-select: text; }
+    button, select, input { font: inherit; color: #e4e4ea; }
+    button { background: #2a2a33; border: 1px solid #3c3c48; border-radius: 6px; padding: 5px 11px; cursor: pointer; white-space: nowrap; }
+    button:hover:not(:disabled) { border-color: #5a5a68; }
+    button:disabled { opacity: .4; cursor: default; }
+    button.again { font-size: 11px; padding: 2px 8px; color: var(--muted); background: none; }
+    button.primary { background: var(--accent); border-color: var(--accent); color: #111; font-weight: 600; }
+    select { background: #23232b; border: 1px solid #3c3c48; border-radius: 6px; padding: 4px 6px; max-width: 100%; }
+    header { padding: 12px 16px 8px; border-bottom: 1px solid var(--line); }
+    .brand { display: flex; align-items: baseline; gap: 10px; }
+    .brand h1 { margin: 0; font-size: 20px; letter-spacing: .02em; }
+    .brand .sub { color: var(--muted); font-size: 12px; }
+    #reset { margin-left: auto; font-size: 11px; padding: 2px 8px; color: var(--muted); }
+    .progress { height: 5px; background: #2a2a33; border-radius: 3px; margin: 8px 0 4px; overflow: hidden; }
+    #progress-bar { height: 100%; width: 0; background: var(--ok); transition: width .3s; }
+    #progress-text { color: var(--muted); font-size: 11px; }
+    nav { display: flex; gap: 6px; align-items: center; padding: 8px 16px; border-bottom: 1px solid var(--line); }
+    #lesson-pick { flex: 1; min-width: 0; }
+    #session-banner { margin: 10px 16px 0; padding: 8px 10px; border: 1px solid #6b4d18; background: #3b2a10; color: var(--accent); border-radius: 8px; display: flex; gap: 8px; align-items: center; font-size: 13px; }
+    #lesson { flex: 1; overflow: auto; padding: 12px 16px 20px; }
+    #chapter { color: var(--accent); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; font-weight: 600; }
+    #title { margin: 2px 0 8px; font-size: 22px; line-height: 1.25; }
+    #body p, #deeper-body p { margin: 0 0 10px; }
+    #body ul { margin: 0 0 10px; padding-left: 20px; }
+    #body li { margin-bottom: 4px; }
+    b { color: #fff; }
+    a[data-show] { color: var(--accent); text-decoration: underline dotted; text-underline-offset: 3px; cursor: pointer; }
+    a[data-show]::after { content: ' ◎'; font-size: .8em; opacity: .7; }
+    a[data-show]:hover { text-decoration-style: solid; }
+    a[data-show].pointing { background: rgba(247,196,73,.18); border-radius: 3px; }
+    .hint { color: var(--muted); font-size: 12px; margin: -4px 0 10px; }
+    .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 4px 0 12px; color: var(--muted); font-size: 12px; }
+    .flow span { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; color: #e4e4ea; }
+    details { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; margin: 6px 0 12px; }
+    summary { cursor: pointer; color: var(--accent); font-weight: 600; font-size: 13px; }
+    #deeper-body { margin-top: 8px; font-size: 13px; color: #cfcfd6; }
+    .widget { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; margin: 0 0 10px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 13px; }
+    .widget .label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+    #instrument-pick, #input-pick { flex: 1; min-width: 160px; }
+    .export-track { flex: 1; height: 6px; background: #2a2a33; border-radius: 3px; overflow: hidden; min-width: 120px; }
+    #export-bar { height: 100%; width: 0; background: var(--accent); }
+    #export-file { width: 100%; color: var(--muted); font-size: 11px; word-break: break-all; }
+    #tasks-head { margin: 14px 0 6px; font-size: 13px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+    #tasks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+    #tasks li { display: flex; gap: 10px; align-items: flex-start; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; }
+    #tasks .tick { flex: none; width: 20px; height: 20px; border-radius: 50%; border: 2px solid #4a4a58; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; margin-top: 1px; }
+    #tasks .text { flex: 1; }
+    #tasks li.done { border-color: #2c5a3e; }
+    #tasks li.done .tick { background: var(--ok); border-color: var(--ok); color: #0c2a17; }
+    #tasks li.done .text { color: var(--muted); }
+    .glossary { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; font-size: 13px; }
+    .glossary dt { font-weight: 700; color: #fff; }
+    .glossary dd { margin: 0; color: #cfcfd6; }
+    footer { border-top: 1px solid var(--line); padding: 6px 16px; min-height: 30px; font-size: 12px; color: var(--muted); }
+    #status.warn { color: var(--accent); }
+    body.busy #lesson button { pointer-events: none; opacity: .5; }
+    #dialog { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; padding: 24px; z-index: 5; }
+    .dlg { background: #222229; border: 1px solid #44444f; border-radius: 12px; padding: 18px; max-width: 420px; }
+    .dlg h3 { margin: 0 0 8px; font-size: 17px; }
+    .dlg p { margin: 0 0 14px; color: #cfcfd6; }
+    .dlg .row { display: flex; justify-content: flex-end; gap: 8px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand"><h1>Newb</h1><span class="sub">learn what a DAW does, in LUNA</span><button id="reset" title="Clear progress">Start over</button></div>
+    <div class="progress"><div id="progress-bar"></div></div>
+    <div id="progress-text"></div>
+  </header>
+  <nav>
+    <button id="prev" title="Previous lesson">&larr;</button>
+    <select id="lesson-pick"></select>
+    <button id="next">Next &rarr;</button>
+  </nav>
+  <div id="session-banner" hidden>Lessons run in their own LUNA session. <button id="banner-start" class="primary">Start lesson session</button></div>
+  <main id="lesson">
+    <div id="chapter"></div>
+    <h2 id="title"></h2>
+    <div id="body"></div>
+    <div class="hint">Underlined words ◎ show you the thing in LUNA.</div>
+    <details id="deeper"><summary>Go deeper</summary><div id="deeper-body"></div></details>
+
+    <div id="w-instrument" class="widget" hidden><span class="label">Instrument</span><select id="instrument-pick"></select></div>
+    <div id="w-qwerty" class="widget" hidden><label><input type="checkbox" id="qwerty" checked> Computer keys</label>
+      <span>A S D F G H J K L = white keys, W E T Y U O P = black keys, Z / X = octave (<span id="octave">4</span>)</span></div>
+    <div id="w-input" class="widget" hidden><span class="label">Input</span><select id="input-pick"></select></div>
+    <div id="w-record" class="widget" hidden>Recording uses the input you chose in the last lesson. Wear headphones if your speakers are on.</div>
+    <div id="w-export" class="widget" hidden><div id="export-progress" class="export-track" hidden><div id="export-bar"></div></div><div id="export-file"></div></div>
+
+    <div id="tasks-head">Your turn</div>
+    <ul id="tasks"></ul>
+  </main>
+  <footer><span id="status">Connecting to LUNA...</span></footer>
+
+  <div id="dialog" hidden><div class="dlg"><h3 id="dlg-title"></h3><p id="dlg-text"></p>
+    <div class="row"><button id="dlg-cancel">Cancel</button><button id="dlg-ok" class="primary">OK</button></div></div></div>
+
+  <script src="vendor/luna.global.js"></script>
+  <script src="logic.js"></script>
+  <script src="lessons.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
